@@ -9,38 +9,38 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/leave-requests")
 public class LeaveRequestController {
     @Autowired
     LeaveRequestService leaveRequestService;
 
-    @GetMapping(value = "/get-all")
+    @GetMapping("/all")
     public List<LeaveRequest> get() {
         return this.leaveRequestService.get();
     }
 
-    @GetMapping(value = "/get-history/{employeeId}")
+    @GetMapping("/history/{employeeId}")
     public List<LeaveRequest> getHistory(@PathVariable String employeeId, @RequestBody String status) {
         return this.leaveRequestService.getHistory(employeeId, status);
     }
 
-    @GetMapping(value = "/get-request-by-employee/{employeeId}")
+    @GetMapping("/employee/{employeeId}")
     public List<LeaveRequest> getRequestByEmployeeId(@PathVariable String employeeId, @RequestBody String status) {
         return this.leaveRequestService.getRequestsByEmployeeId(employeeId, status);
     }
 
-    @GetMapping(value = "/get-request-by-manager/{approverId}")
+    @GetMapping("/manager/{approverId}")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     public List<LeaveRequest> getRequestByApproverId(@PathVariable String approverId, @RequestBody String status) {
         return this.leaveRequestService.getRequestsByApproverId(approverId, status);
     }
 
-    @PostMapping(value = "/request-leave")
+    @PostMapping("/request")
     public String leaveRequest(@RequestBody LeaveRequestDto leaveRequestDto) {
         return this.leaveRequestService.requestLeave(leaveRequestDto);
     }
 
-    @PostMapping(value = "/process-leave-request/{reqId}")
+    @PostMapping("/process/{reqId}")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     public void processRequest(@PathVariable Long reqId, @RequestBody LeaveRequestDto leaveRequestDto) {
         if (leaveRequestDto.getStatus().equals("APPROVE")) {
@@ -50,12 +50,12 @@ public class LeaveRequestController {
         }
     }
 
-    @DeleteMapping(value = "/delete-request/{reqId}")
+    @DeleteMapping("/delete/{reqId}")
     public String deleteRequest(@PathVariable Long reqId) {
         return this.leaveRequestService.deleteRequest(reqId);
     }
 
-    @PostMapping(value = "/mark-as-read/{requestId}")
+    @PostMapping("/mark-as-read/{requestId}")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     public void markAsRead(@PathVariable Long requestId) {
         this.leaveRequestService.markAsRead(requestId);

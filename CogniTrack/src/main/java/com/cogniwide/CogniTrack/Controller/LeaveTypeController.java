@@ -9,24 +9,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/leave-type")
 public class LeaveTypeController {
     @Autowired
     LeaveTypeService leaveTypeService;
 
-    @PostMapping(value = "/add-new-leave-type")
+    @PostMapping(value = "/add-new")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Boolean addType(@RequestBody LeaveType leaveType) {
         return this.leaveTypeService.addType(leaveType);
     }
 
-    @DeleteMapping(value = "/delete-type")
+    @DeleteMapping(value = "/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Boolean delete(@RequestBody LeaveType leaveType) {
         return this.leaveTypeService.delete(leaveType);
     }
 
-    @GetMapping(value = "/get-all-type")
+    @GetMapping(value = "/get-all")
     public List<LeaveType> getAllType() {
         return this.leaveTypeService.getallType();
     }
