@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LeaveTypeService {
@@ -22,14 +23,13 @@ public class LeaveTypeService {
         }
     }
 
-    public Boolean delete(LeaveType leaveType) {
-        try {
-            this.leaveTypeRepo.delete(leaveType);
-            return true;
-        }
-        catch (Exception e){
-            return false;
-        }
+    public Boolean delete(Long leaveTypeId) {
+          LeaveType leaveType = this.leaveTypeRepo.findByLeaveTypeId(leaveTypeId);
+          if(leaveType==null) {
+              return false;
+          }
+          this.leaveTypeRepo.delete(leaveType);
+          return true;
     }
 
     public List<LeaveType> getallType() {

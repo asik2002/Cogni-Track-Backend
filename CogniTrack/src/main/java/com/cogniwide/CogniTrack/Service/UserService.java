@@ -56,7 +56,7 @@ public class UserService {
         if(authentication.isAuthenticated()){
             return jwtService.generateToken(user.getUsername());
         }
-        return "Fail";
+        return "";
     }
 
     public boolean updateRole(String employeeId,String role) {

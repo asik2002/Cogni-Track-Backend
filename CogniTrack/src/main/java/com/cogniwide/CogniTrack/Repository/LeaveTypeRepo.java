@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LeaveTypeRepo extends JpaRepository<LeaveType,Long> {
+    LeaveType findByLeaveTypeId(Long leaveTypeId);
 }
